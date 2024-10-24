@@ -2,13 +2,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Box, CircularProgressProps, IconButton, IconButtonProps, Tooltip, TooltipProps } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import CheckIcon from '@mui/icons-material/Check';
-import { grey } from '@mui/material/colors';
+import { blue, grey } from '@mui/material/colors';
 
 type IconButtonTooltipLoadingProps = {
     TooltipProps?: Partial<TooltipProps>,
     Icon: React.ReactNode,
     CircularProgressProps?: CircularProgressProps,
     title?: string,
+    color?: CircularProgressProps['color'],
+    loadingTitle?: string,
     isLoading?: boolean,
 } & IconButtonProps
 
@@ -25,28 +27,40 @@ const IconButtonTooltipLoading = ({
     CircularProgressProps,
     Icon,
     title,
+    loadingTitle,
     isLoading = false,
     size = 'small',
+    color = 'inherit',
     sx = {},
     ...restButtonProps
 }: IconButtonTooltipLoadingProps) => {
-
-    const IconButtonNode = <Box sx={{ position: 'relative' }}>
-        <IconButton size={size}
+    const { color: btnColor = 'none', ...btnRestStyles } = sx;
+    const IconButtonNode = <Box sx={{ position: 'relative', color: btnColor, }}>
+        <IconButton
+            size={size}
             sx={{
-                backgroundColor: grey[50],
+                // zIndex: 1110,
+                // backgroundColor: 'blue',
                 ...sx,
             }}
+            color={color}
             {...restButtonProps}>
             {Icon}
         </IconButton>
-        {isLoading && <CircularProgress size={loaderSize[size]} sx={{ position: 'absolute', top: 0, left: 0 }} {...CircularProgressProps} />}
+        {isLoading && <CircularProgress
+            size={loaderSize[size]}
+            color={color}
+            sx={{ position: 'absolute', top: 0, left: 0 }}
+            {...CircularProgressProps} />}
     </Box>
 
     if (title == undefined) return IconButtonNode;
 
     return (
-        <Tooltip placement='top' title={title} {...TooltipProps}>
+        <Tooltip
+            placement='top'
+            title={isLoading && loadingTitle != undefined ? loadingTitle : title}
+            {...TooltipProps}>
             {IconButtonNode}
         </Tooltip>
     )
