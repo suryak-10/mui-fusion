@@ -19,6 +19,7 @@ const page = () => {
                     title={size}
                     loadingTitle={`${size} loading`}
                     isLoading={loading}
+                    disabled={loading}
                     // CircularProgressProps={{ color: 'error' }}
                     Icon={<DeleteIcon />}
                     TooltipProps={{ placement: 'top' }}
