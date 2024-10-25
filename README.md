@@ -5,4 +5,4 @@ My primary goal is to create fusion components, which is mix some components and
 
 The list of fusion components I have created.
 
-- [-] IconButtonTooltipLoading
+- [x] IconButtonTooltipLoading
